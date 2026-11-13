@@ -54,21 +54,25 @@
                 <a href="{{ route('posts.index') }}" class="text-sm font-bold text-amber-100 hover:text-white bg-[#221004] px-4 py-2 rounded-lg border border-amber-700/60 transition">
                     📋 All Notices
                 </a>
-                @if (Route::has('login'))
-                    @auth
-                        <span class="text-xs text-amber-200">Hi, <strong class="text-amber-100">{{ auth()->user()->name }}</strong></span>
-                        <form method="POST" action="{{ route('logout') }}" class="inline">
-                            @csrf
-                            <button type="submit" class="text-xs uppercase tracking-wider font-semibold bg-[#1a0c03] hover:bg-black px-3 py-1.5 rounded text-amber-200 hover:text-white transition cursor-pointer">
-                                Logout
-                            </button>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="text-xs font-bold uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-stone-950 px-3.5 py-2 rounded shadow transition">
-                            Sign in
+                @auth
+                    @if (auth()->user()->author)
+                        <a href="{{ route('posts.create') }}" class="text-sm font-bold text-stone-950 bg-amber-400 hover:bg-amber-300 px-4 py-2 rounded-lg shadow transition">
+                            ➕ New post
                         </a>
-                    @endauth
-                @endif
+                    @endif
+                    <span class="text-xs text-amber-200">Hi, <strong class="text-amber-100">{{ auth()->user()->name }}</strong></span>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="text-xs uppercase tracking-wider font-semibold bg-[#1a0c03] hover:bg-black px-3 py-1.5 rounded text-amber-200 hover:text-white transition cursor-pointer">
+                            Logout
+                        </button>
+                    </form>
+                @endauth
+                @guest
+                    <a href="{{ route('login') }}" class="text-xs font-bold uppercase tracking-wider bg-amber-500 hover:bg-amber-400 text-stone-950 px-3.5 py-2 rounded shadow transition">
+                        Sign in
+                    </a>
+                @endguest
             </nav>
         </div>
     </header>

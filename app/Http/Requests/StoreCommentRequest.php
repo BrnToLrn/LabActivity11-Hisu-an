@@ -12,18 +12,30 @@ class StoreCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return auth()->check();
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'body' => ['required', 'string', 'min:3', 'max:1000'],
+        ];
+    }
+
+    /**
+     * Get the custom validation error messages.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'body.min' => 'Purok Hisuan comments need at least 3 characters.',
         ];
     }
 }

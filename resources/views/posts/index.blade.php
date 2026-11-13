@@ -55,7 +55,7 @@
                 Filter
             </button>
 
-            @if(request()->filled('q') || request()->filled('category'))
+            @if(request()->filled('q') || request()->filled('category') || request()->filled('tag'))
                 <a 
                     href="{{ route('posts.index') }}" 
                     class="inline-flex items-center justify-center px-5 py-2.5 bg-stone-200 hover:bg-stone-300 text-stone-800 rounded-lg text-base font-bold transition border border-stone-400"
@@ -117,19 +117,36 @@
                         <p class="text-stone-800 text-xs sm:text-sm line-clamp-4 leading-relaxed font-normal mb-3">
                             {{ $post->body }}
                         </p>
+
+                        @if ($post->tags->isNotEmpty())
+                            <div class="flex flex-wrap gap-1 mb-3">
+                                @foreach ($post->tags as $tag)
+                                    <a href="{{ route('posts.index', array_merge(request()->query(), ['tag' => $tag->name])) }}" class="inline-block bg-stone-200/90 hover:bg-stone-300 text-stone-800 text-[10px] font-semibold px-2 py-0.5 rounded transition">
+                                        #{{ $tag->name }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
 
                     <div class="pt-2 border-t-2 border-stone-200/80 flex items-center justify-between text-xs font-bold text-stone-700">
-                        <span class="bg-stone-200/80 text-stone-800 px-2 py-0.5 rounded text-[11px]">
-                            ID: #{{ $post->author_id }}
-                        </span>
+                        <a href="{{ route('authors.show', $post->author) }}" class="bg-stone-200/80 hover:bg-amber-200 text-stone-800 px-2 py-0.5 rounded text-[11px] truncate max-w-[130px] transition" title="{{ $post->author?->name }}">
+                            ✍️ {{ $post->author?->name ?? 'Author #' . $post->author_id }}
+                        </a>
                         
-                        <div class="flex items-center space-x-1 text-stone-900 bg-stone-100 px-2 py-0.5 rounded border border-stone-200 text-[11px]">
-                            <svg class="w-3.5 h-3.5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                            </svg>
-                            <span>{{ $post->views }}</span>
+                        <div class="flex items-center space-x-1.5">
+                            <span class="inline-flex items-center space-x-1 text-stone-900 bg-stone-100 px-1.5 py-0.5 rounded border border-stone-200 text-[11px]" title="Comments">
+                                <span>💬</span>
+                                <span>{{ $post->comments_count }}</span>
+                            </span>
+
+                            <div class="flex items-center space-x-1 text-stone-900 bg-stone-100 px-1.5 py-0.5 rounded border border-stone-200 text-[11px]" title="Views">
+                                <svg class="w-3.5 h-3.5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <span>{{ $post->views }}</span>
+                            </div>
                         </div>
                     </div>
                 </article>

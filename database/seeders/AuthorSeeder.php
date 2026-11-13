@@ -16,7 +16,7 @@ class AuthorSeeder extends Seeder
         Author::create([
             'name'     => 'Kagawad Juan Dela Cruz',
             'position' => 'Kagawad',
-            'email'    => 'kagawad.juandelacruz@example.ph',
+            'email'    => 'kagawad.hisuan@bulletin.test',
         ]);
 
         // Then create 4 factory authors
