@@ -1,4 +1,4 @@
-# Lab Activity 10: Barangay Bulletin Board System
+# Lab Activity 11: Barangay Bulletin Board System
 
 A Laravel 12 application featuring Tailwind CSS v3, Eloquent Active Record models, migrations, factories, seeders, dynamic query filters, pagination, and view counters.
 
@@ -31,7 +31,7 @@ A Laravel 12 application featuring Tailwind CSS v3, Eloquent Active Record model
 
 1. **Clone and Navigate**:
    ```bash
-   cd LabActivity10-Hisu-an
+   cd LabActivity11-Hisu-an
    ```
 
 2. **Install PHP Dependencies**:
